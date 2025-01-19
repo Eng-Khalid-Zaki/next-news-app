@@ -1,12 +1,16 @@
 "use client";
 import React from "react";
-import { useParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import Image from "next/image";
 import { DUMMY_NEWS } from "@/dummy-news";
 
 function NewsItem() {
   const { slug } = useParams();
   const slugItem = DUMMY_NEWS.find((slugItem) => slugItem.slug === slug);
+
+  if (!slugItem) {
+    notFound();
+  }
 
   return (
     <article className="news-article">
