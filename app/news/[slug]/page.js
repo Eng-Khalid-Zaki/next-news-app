@@ -1,12 +1,10 @@
-"use client";
-import React from "react";
-import { notFound, useParams } from "next/navigation";
-import Image from "next/image";
+import { notFound } from "next/navigation";
 import { DUMMY_NEWS } from "@/dummy-news";
+import Link from "next/link";
 
-function NewsItem() {
-  const { slug } = useParams();
-  const slugItem = DUMMY_NEWS.find((slugItem) => slugItem.slug === slug);
+function NewsItem({ params }) {
+  const newsSlug = params.slug;
+  const slugItem = DUMMY_NEWS.find((slugItem) => slugItem.slug === newsSlug);
 
   if (!slugItem) {
     notFound();
@@ -15,7 +13,9 @@ function NewsItem() {
   return (
     <article className="news-article">
       <header>
-        <img src={`/images/news/${slugItem.image}`} alt={slugItem.title} />
+        <Link href={`/news/${slugItem.slug}/image`}>
+          <img src={`/images/news/${slugItem.image}`} alt={slugItem.title} />
+        </Link>
         <h1>{slugItem.title}</h1>
         <time dateTime={slugItem.date}>{slugItem.date}</time>
       </header>
